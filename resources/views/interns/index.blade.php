@@ -119,7 +119,8 @@
                     <tr class="hover:bg-gray-50 transition text-center h-32">
                         <td class="px-6 py-6">
                             <img src="{{ $intern->foto_url }}"
-                                 class="w-28 h-28 object-cover rounded-2xl mx-auto shadow">
+                                class="w-28 h-28 object-cover rounded-2xl mx-auto shadow"
+                                alt="Foto {{ $intern->name }}">
                         </td>
 
                         <td class="px-6 py-6">

@@ -33,16 +33,6 @@
             <span class="text-blue-600">Detail</span> Peserta Magang
         </h1>
 
-        <div class="flex items-center gap-6 animate-slide-in">
-            <span class="font-medium text-gray-700">{{ auth()->user()->name }}</span>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="btn-hover px-6 py-3 bg-red-600 text-white rounded-xl text-lg hover:bg-red-700">
-                    Logout
-                </button>
-            </form>
-        </div>
     </div>
 </header>
 
@@ -69,8 +59,9 @@
 
             <!-- FOTO -->
             <div class="flex flex-col items-center text-center">
-                <img src="{{ $intern->foto_url }}" 
-                     class="w-56 h-56 object-cover rounded-2xl shadow mb-5">
+                <img src="{{ $intern->foto_url }}" <img src="{{ $intern->foto_url }}"
+                    class="w-28 h-28 object-cover rounded-2xl mx-auto shadow"
+                    alt="Foto {{ $intern->name }}">
 
                 <h2 class="text-3xl font-bold">{{ $intern->name }}</h2>
                 <p class="text-gray-600 text-xl mt-1">{{ $intern->email }}</p>

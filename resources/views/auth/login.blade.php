@@ -74,14 +74,6 @@
             </a>
 
             <!-- NAV -->
-            <div class="hidden sm:flex items-center gap-6 animate-slide-up">
-                <span class="text-xl text-gray-700">Belum punya akun?</span>
-
-                <a href="{{ route('register') }}"
-                   class="btn-hover px-6 py-3 text-xl font-semibold text-blue-600 hover:text-blue-700">
-                    Daftar
-                </a>
-
                 <a href="{{ url('/') }}"
                    class="btn-hover px-6 py-3 text-xl font-semibold text-gray-700 hover:text-gray-900 flex items-center gap-2">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

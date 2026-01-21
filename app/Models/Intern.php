@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Intern extends Model
 {
@@ -33,12 +34,17 @@ class Intern extends Model
         'tanggal_lahir' => 'date',
     ];
 
-    // Method untuk mendapatkan path foto
+    /**
+     * URL foto peserta magang
+     */
     public function getFotoUrlAttribute()
     {
-        if ($this->foto) {
+        // Jika ada nama file DAN file-nya benar-benar ada
+        if ($this->foto && Storage::disk('public')->exists('foto-intern/' . $this->foto)) {
             return asset('storage/foto-intern/' . $this->foto);
         }
+
+        // Fallback default avatar
         return asset('images/default-profile.jpg');
     }
 }

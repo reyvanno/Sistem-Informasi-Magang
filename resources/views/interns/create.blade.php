@@ -64,12 +64,6 @@
             <span class="text-blue-600">Tambah</span> Peserta Magang
         </h1>
 
-        <form method="POST" action="{{ route('logout') }}" class="animate-slide-in">
-            @csrf
-            <button class="btn-hover px-6 py-3 bg-red-600 text-white rounded-xl text-lg hover:bg-red-700">
-                Logout
-            </button>
-        </form>
     </div>
 </header>
 

@@ -56,12 +56,6 @@
             <span class="text-blue-600">Edit</span> Peserta Magang
         </h1>
 
-        <form method="POST" action="{{ route('logout') }}" class="animate-slide-in">
-            @csrf
-            <button class="btn-hover px-6 py-3 bg-red-600 text-white rounded-xl text-lg hover:bg-red-700">
-                Logout
-            </button>
-        </form>
     </div>
 </header>
 
@@ -171,7 +165,9 @@
     <label class="label-xl">Foto</label>
 
     @if($intern->foto_url)
-        <img src="{{ $intern->foto_url }}" class="w-32 h-32 rounded mb-3 object-cover">
+       <img src="{{ $intern->foto_url }}"
+        class="w-28 h-28 object-cover rounded-2xl mx-auto shadow"
+        alt="Foto {{ $intern->name }}">
 
         <label class="flex items-center space-x-2 mb-3">
             <input type="checkbox" name="delete_foto" value="1"

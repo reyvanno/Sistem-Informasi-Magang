@@ -67,12 +67,6 @@
                        class="btn-hover text-[20px] text-gray-700 hover:text-gray-900 animate-slide-in delay-200">
                         Masuk
                     </a>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}"
-                           class="btn-hover px-6 py-3 bg-blue-600 text-white text-[20px] rounded-2xl hover:bg-blue-700 animate-slide-in delay-400">
-                            Daftar
-                        </a>
-                    @endif
                 @endauth
             @endif
         </div>
