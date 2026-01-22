@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard | Sistem Informasi Magang</title>
+    <title>Dashboard Siswa | Sistem Informasi Magang</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://unpkg.com/alpinejs" defer></script>
@@ -31,20 +31,16 @@
     <div class="max-w-7xl mx-auto px-10 h-20 flex items-center justify-between">
 
         <h1 class="text-3xl font-bold text-gray-900 animate-slide-in">
-            <span class="text-blue-600">Dashboard</span> Sistem Informasi Magang
+            <span class="text-blue-600">Dashboard</span> Siswa
         </h1>
 
-        <!-- DROPDOWN PROFIL -->
+        <!-- PROFIL -->
         <div x-data="{ open:false }" class="relative animate-slide-in">
-
-            <!-- Trigger -->
             <button @click="open = !open"
                     class="flex items-center gap-4 px-4 py-2 rounded-xl hover:bg-gray-100 transition">
 
-                <!-- Avatar -->
                 @php $initial = strtoupper(substr(auth()->user()->name,0,1)); @endphp
-                <div class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center
-                            text-xl font-bold select-none">
+                <div class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center text-xl font-bold">
                     {{ $initial }}
                 </div>
 
@@ -58,28 +54,20 @@
                 </svg>
             </button>
 
-            <!-- Dropdown -->
-            <div x-show="open"
-                 @click.away="open = false"
-                 x-transition
+            <div x-show="open" @click.away="open=false" x-transition
                  class="absolute right-0 mt-3 w-56 bg-white border rounded-xl shadow-xl py-2">
 
-                <!-- Hanya siswa boleh edit profil -->
-                @if(auth()->user()->role === 'siswa')
-                    <a href="{{ route('profile.edit') }}"
-                       class="block px-4 py-3 text-lg hover:bg-gray-100 text-gray-700">
-                        Edit Profil
-                    </a>
-                @endif
+                <a href="{{ route('profile.edit') }}"
+                   class="block px-4 py-3 text-lg hover:bg-gray-100 text-gray-700">
+                    Edit Profil
+                </a>
 
-                <!-- Logout -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button class="w-full text-left px-4 py-3 text-lg text-red-600 hover:bg-red-50">
                         Logout
                     </button>
                 </form>
-
             </div>
         </div>
     </div>
@@ -87,7 +75,6 @@
 
 <!-- CONTENT -->
 <main class="max-w-7xl mx-auto px-10 pt-36 pb-24 animate-fade-in">
-
     <div class="bg-white rounded-3xl border shadow-xl p-12 card-hover">
 
         <h2 class="text-4xl font-bold text-gray-900 mb-6">
@@ -95,25 +82,18 @@
         </h2>
 
         <p class="text-2xl text-gray-700 mb-10">
-            Anda login sebagai 
-            <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-xl font-semibold">
-                {{ auth()->user()->role }}
+            Anda login sebagai
+            <span class="bg-green-100 text-green-800 px-4 py-1 rounded-xl font-semibold">
+                siswa
             </span>
         </p>
 
-        @if(auth()->user()->isAdmin())
-            <a href="{{ route('interns.index') }}"
-               class="btn-hover px-10 py-4 bg-blue-600 text-white rounded-2xl text-2xl hover:bg-blue-700">
-                Kelola Peserta Magang
-            </a>
-        @else
-            <a href="{{ route('siswa.interns.index') }}"
-               class="btn-hover px-10 py-4 bg-green-600 text-white rounded-2xl text-2xl hover:bg-green-700">
-                Lihat Daftar Peserta Magang
-            </a>
-        @endif
-    </div>
+        <a href="{{ route('siswa.interns.index') }}"
+           class="btn-hover px-10 py-4 bg-green-600 text-white rounded-2xl text-2xl hover:bg-green-700">
+            Lihat Daftar Peserta Magang
+        </a>
 
+    </div>
 </main>
 
 </body>

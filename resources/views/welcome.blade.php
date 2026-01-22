@@ -56,19 +56,18 @@
         </h1>
 
         <div class="flex items-center gap-6">
-            @if (Route::has('login'))
-                @auth
-                    <a href="/dashboard"
-                       class="btn-hover text-[20px] text-gray-700 hover:text-gray-900 animate-slide-in delay-200">
-                        Dashboard
-                    </a>
-                @else
-                    <a href="{{ route('login') }}"
-                       class="btn-hover text-[20px] text-gray-700 hover:text-gray-900 animate-slide-in delay-200">
-                        Masuk
-                    </a>
-                @endauth
-            @endif
+            @if(auth()->check())
+            <a href="{{ auth()->user()->role === 'admin'
+                ? route('dashboard.admin')
+                : route('dashboard.siswa') }}"
+            class="btn-hover text-[20px] text-gray-700 hover:text-gray-900 animate-slide-in delay-200">
+                Dashboard
+            </a>
+        @else
+            <a href="{{ route('login') }}" class="btn-hover text-[20px] text-gray-700 hover:text-gray-900 animate-slide-in delay-200">
+                Login
+            </a>
+        @endif
         </div>
     </div>
 </header>

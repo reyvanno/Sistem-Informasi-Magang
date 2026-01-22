@@ -81,9 +81,28 @@
 
 <main class="max-w-7xl mx-auto px-6 pt-36 pb-24 animate-fade-in">
 
+    @if(session('success'))
+        <div id="flash-success"
+            class="mb-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded-xl transition-opacity duration-500">
+            {{ session('success') }}
+        </div>
+
+        <script>
+            setTimeout(() => {
+                const el = document.getElementById('flash-success');
+                if (el) {
+                    el.style.opacity = '0';
+                    setTimeout(() => el.remove(), 500);
+                }
+            }, 3000); // ⬅️ waktu tampil (ms)
+        </script>
+    @endif
+
     <div class="flex justify-between items-center mb-10">
-        <a href="{{ route('dashboard') }}"
-           class="btn-hover px-7 py-3 rounded-xl text-lg bg-gray-700 text-white hover:bg-gray-800">
+        <a href="{{ auth()->user()->isAdmin() 
+                ? route('dashboard.admin') 
+                : route('dashboard.siswa') }}"
+        class="btn-hover px-7 py-3 rounded-xl text-lg bg-gray-700 text-white hover:bg-gray-800">
             ← Dashboard
         </a>
 
@@ -95,10 +114,10 @@
         @endif
     </div>
 
-    <div class="bg-white rounded-3xl border shadow-xl card-hover p-8 overflow-x-auto">
+    <div class="bg-white rounded-3xl border shadow-xl card-hover p-8 overflow-x-hidden">
 
         @if($interns->count())
-            <table class="min-w-full text-[18px] leading-relaxed">
+            <table class="w-full table-fixed text-[18px] leading-relaxed">
 
                 <thead class="bg-gray-100 text-gray-700">
                     <tr class="h-20 text-center text-xl font-semibold">
@@ -118,14 +137,16 @@
                 @foreach($interns as $intern)
                     <tr class="hover:bg-gray-50 transition text-center h-32">
                         <td class="px-6 py-6">
-                            <img src="{{ $intern->foto_url }}"
-                                class="w-28 h-28 object-cover rounded-2xl mx-auto shadow"
-                                alt="Foto {{ $intern->name }}">
+                            <div class="w-28 h-28 mx-auto rounded-full overflow-hidden shadow bg-gray-100">
+                                <img src="{{ $intern->foto_url }}"
+                                    alt="Foto {{ $intern->name }}"
+                                    class="w-full h-full object-cover object-center">
+                            </div>
                         </td>
 
-                        <td class="px-6 py-6">
+                        <td class="px-4 py-6 max-w-[260px] break-words">
                             <div class="text-xl font-bold text-gray-900">{{ $intern->name }}</div>
-                            <div class="text-gray-600 text-[15px]">{{ $intern->email }}</div>
+                            <div class="text-gray-600 text-[15px] truncate">{{ $intern->email }}</div>
                             <div class="text-gray-600 text-[15px]">{{ $intern->phone }}</div>
                         </td>
 
@@ -145,32 +166,32 @@
                             {{ $intern->end_date?->format('d/m/Y') }}
                         </td>
 
-                        <td class="px-6 py-6">
-                            <div class="flex flex-col items-center gap-3">
+                        <td class="px-6 py-6 text-center">
+                            <div class="flex flex-col items-center gap-2 w-full">
 
                                 @if(auth()->user()->isAdmin())
                                     <a href="{{ route('interns.show', $intern) }}"
-                                       class="btn-hover w-36 py-3 bg-green-600 text-white rounded-xl text-lg hover:bg-green-700 text-center">
+                                    class="btn-hover w-24 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700">
                                         Lihat
                                     </a>
 
                                     <a href="{{ route('interns.edit', $intern) }}"
-                                       class="btn-hover w-36 py-3 bg-yellow-500 text-white rounded-xl text-lg hover:bg-yellow-600 text-center">
+                                    class="btn-hover w-24 py-2 bg-yellow-500 text-white rounded-lg text-sm hover:bg-yellow-600">
                                         Edit
                                     </a>
 
                                     <form action="{{ route('interns.destroy', $intern) }}"
-                                          method="POST"
-                                          onsubmit="return confirm('Hapus peserta ini?')">
+                                        method="POST"
+                                        onsubmit="return confirm('Hapus peserta ini?')">
                                         @csrf @method('DELETE')
-                                        <button class="btn-hover w-36 py-3 bg-red-600 text-white rounded-xl text-lg hover:bg-red-700 text-center">
+                                        <button
+                                            class="btn-hover w-24 py-2 bg-red-600 text-white rounded-lg text-sm hover:bg-red-700">
                                             Hapus
                                         </button>
                                     </form>
-
                                 @else
                                     <a href="{{ route('siswa.interns.show', $intern) }}"
-                                       class="btn-hover w-36 py-3 bg-blue-600 text-white rounded-xl text-lg hover:bg-blue-700 text-center">
+                                    class="btn-hover w-24 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700">
                                         Detail
                                     </a>
                                 @endif

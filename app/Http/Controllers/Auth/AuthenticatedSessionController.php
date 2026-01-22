@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Services\ActivityLogService;
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -14,47 +13,21 @@ class AuthenticatedSessionController extends Controller
         return view('auth.login');
     }
 
-    public function store(Request $request)
+    public function store(LoginRequest $request)
     {
-        // Validasi login
-        $request->validate([
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
-        ]);
-
-        // Aktifkan Remember Me
-        $remember = $request->boolean('remember');
-
-        if (!Auth::attempt(
-            $request->only('email', 'password'),
-            $remember
-        )) {
-            return back()->withErrors([
-                'email' => 'Email atau password salah.',
-            ])->onlyInput('email');
-        }
-
-        // Regenerate session setelah login
+        $request->authenticate();
         $request->session()->regenerate();
 
-        // Log login activity
-        ActivityLogService::log(
-            'login',
-            'User logged in: ' . Auth::user()->name .
-            ($remember ? ' (remembered)' : '')
-        );
+        if (auth()->user()->isAdmin()) {
+            return redirect()->route('dashboard.admin');
+        }
 
-        return redirect()->intended(route('dashboard'));
+        return redirect()->route('dashboard.siswa');
     }
 
     public function destroy(Request $request)
     {
-        // Log logout activity
-        if (Auth::check()) {
-            ActivityLogService::log('logout', "User logged out: " . Auth::user()->name);
-        }
-
-        Auth::guard('web')->logout();
+        auth()->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

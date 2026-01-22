@@ -161,25 +161,27 @@
                         </select>
                     </div>
 
-                    <div>
-    <label class="label-xl">Foto</label>
+                    <div class="space-y-3">
+                        <label class="label-xl">Foto</label>
 
-    @if($intern->foto_url)
-       <img src="{{ $intern->foto_url }}"
-        class="w-28 h-28 object-cover rounded-2xl mx-auto shadow"
-        alt="Foto {{ $intern->name }}">
+                        <!-- PREVIEW FOTO LAMA / BARU -->
+                        <div class="w-[180px] h-[240px] border rounded-xl overflow-hidden bg-gray-100 shadow mx-auto">
+                            <img
+                                id="fotoPreview"
+                                src="{{ $intern?->foto_url }}"
+                                alt="Foto Profil"
+                                class="w-full h-full object-cover object-center">
+                        </div>
 
-        <label class="flex items-center space-x-2 mb-3">
-            <input type="checkbox" name="delete_foto" value="1"
-                   class="w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500">
-            <span class="text-gray-700 text-base">Hapus foto</span>
-        </label>
-    @endif
-
-    <input type="file" name="foto" accept="image/*" class="input-xl">
-    <p class="text-gray-500 text-sm mt-1">Max 2MB</p>
-</div>
-
+                        <!-- INPUT FILE -->
+                        <input
+                            type="file"
+                            name="foto"
+                            accept="image/*"
+                            class="input-xl"
+                            onchange="previewFoto(event)">
+                        <p class="text-gray-600 mt-1">*Max 2MB</p>
+                    </div>
 
             <div class="mt-12">
                 <label class="label-xl">Alamat Lengkap *</label>

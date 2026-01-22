@@ -74,22 +74,20 @@
             </a>
 
             <!-- NAV -->
-                <a href="{{ url('/') }}"
-                   class="btn-hover px-6 py-3 text-xl font-semibold text-gray-700 hover:text-gray-900 flex items-center gap-2">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3
-                                 m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3
-                                 m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2
-                                 a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    Beranda
-                </a>
-            </div>
+            <a href="{{ url('/') }}"
+               class="btn-hover px-6 py-3 text-xl font-semibold text-gray-700 hover:text-gray-900 flex items-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3
+                             m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3
+                             m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2
+                             a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Beranda
+            </a>
         </div>
     </div>
 </header>
-
 
 <!-- MAIN CONTENT -->
 <main class="min-h-screen flex items-center justify-center px-6 pt-40 pb-20">
@@ -116,75 +114,69 @@
                 </p>
             </div>
 
-            <!-- SESSION MESSAGE -->
-            @if (session('status'))
-                <div class="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl text-lg">
-                    {{ session('status') }}
-                </div>
-            @endif
-
             <!-- FORM -->
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
-                <!-- EMAIL -->
+                <!-- USERNAME -->
                 <div class="mb-8">
-                    <label for="email" class="label-xl block mb-3">Email</label>
+                    <label for="username" class="label-xl block mb-3">
+                        Username (NIP / NISN)
+                    </label>
 
-                    <input id="email"
-                           type="email"
-                           name="email"
-                           value="{{ old('email') }}"
+                    <input id="username"
+                           type="text"
+                           name="username"
+                           inputmode="numeric"
+                           pattern="[0-9]+"
+                           value="{{ old('username') }}"
                            required autofocus
-                           placeholder="nama@email.com"
-                           class="input-xl block w-full border border-gray-300 rounded-xl @error('email') border-red-400 @enderror">
+                           placeholder="Masukkan NIP atau NISN"
+                           class="input-xl block w-full border border-gray-300 rounded-xl @error('username') border-red-400 @enderror">
 
-                    @error('email')
+                    @error('username')
                         <p class="text-red-600 text-lg mt-3">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Password -->
+                <!-- PASSWORD -->
                 <div class="mb-6">
                     <div class="flex items-center justify-between mb-2">
                         <label for="password" class="block text-lg font-medium text-gray-700">
-                            {{ __('Kata Sandi') }}
+                            Kata Sandi
                         </label>
                     </div>
 
                     <div class="relative">
                         <input id="password"
-                            type="password"
-                            name="password"
-                            required
-                            autocomplete="current-password"
-                            placeholder="••••••••"
-                            class="input-focus block w-full px-5 py-4 pr-14 text-lg border border-gray-300 rounded-xl focus:border-blue-500 focus:ring-blue-500 transition @error('password') border-red-300 @enderror">
+                               type="password"
+                               name="password"
+                               required
+                               autocomplete="current-password"
+                               placeholder="••••••••"
+                               class="input-focus block w-full px-5 py-4 pr-14 text-lg border border-gray-300 rounded-xl focus:border-blue-500 focus:ring-blue-500 transition @error('password') border-red-300 @enderror">
 
                         <!-- Toggle Button -->
                         <button type="button"
                                 onclick="togglePassword('password', this)"
                                 class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
 
-                            <!-- Eye (default) -->
+                            <!-- Eye -->
                             <svg class="w-7 h-7 eye-open" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                      d="M2.458 12C3.732 7.943 7.523 5 12 5
+                                         c4.477 0 8.268 2.943 9.542 7
+                                         -1.274 4.057-5.065 7-9.542 7
+                                         -4.477 0-8.268-2.943-9.542-7z" />
                             </svg>
 
-                            <!-- Eye Slash (hidden by default) -->
+                            <!-- Eye Slash -->
                             <svg class="w-7 h-7 eye-closed hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7
-                                        a9.97 9.97 0 012.108-3.563m3.75-2.3A9.99 9.99 0 0112 5
-                                        c4.477 0 8.268 2.943 9.542 7a9.963 9.963 0 01-4.043 5.23M15 12
-                                        a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                    d="M3 3l18 18" />
+                                      d="M3 3l18 18" />
                             </svg>
-
                         </button>
                     </div>
 
@@ -219,18 +211,7 @@
             </form>
         </div>
 
-        <!-- FOOTER LINK -->
-        <div class="text-center mt-10">
-            <a href="{{ url('/') }}" class="text-xl text-gray-700 hover:text-gray-900 flex items-center justify-center gap-3 btn-hover">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                Kembali ke beranda
-            </a>
-        </div>
-
-        <!-- COPYRIGHT -->
+        <!-- FOOTER -->
         <div class="mt-10 text-center text-gray-600 text-xl">
             © {{ date('Y') }} Sistem Informasi Magang
         </div>
@@ -238,6 +219,7 @@
 </main>
 
 </body>
+
 <script>
 function togglePassword(id, btn) {
     const input = document.getElementById(id);
