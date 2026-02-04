@@ -1,12 +1,10 @@
 FROM php:8.3-cli
 
-# Install dependencies
 RUN apt-get update && apt-get install -y \
     git unzip libzip-dev libpng-dev libonig-dev libxml2-dev \
     zip curl \
     && docker-php-ext-install pdo pdo_mysql zip
 
-# Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
@@ -15,10 +13,24 @@ COPY . .
 
 RUN composer install --no-dev --optimize-autoloader
 
-RUN php artisan key:generate
+EXPOSE 8080
 
-RUN php artisan storage:link
+CMD php artisan serve --host=0.0.0.0 --port=$PORT
+FROM php:8.3-cli
 
-EXPOSE 10000
+RUN apt-get update && apt-get install -y \
+    git unzip libzip-dev libpng-dev libonig-dev libxml2-dev \
+    zip curl \
+    && docker-php-ext-install pdo pdo_mysql zip
 
-CMD php artisan serve --host=0.0.0.0 --port=10000
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www
+
+COPY . .
+
+RUN composer install --no-dev --optimize-autoloader
+
+EXPOSE 8080
+
+CMD php artisan serve --host=0.0.0.0 --port=$PORT
