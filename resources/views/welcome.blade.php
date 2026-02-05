@@ -156,11 +156,6 @@
                class="btn-hover px-6 sm:px-8 py-3 sm:py-4 bg-blue-600 text-white rounded-2xl text-base sm:text-lg lg:text-xl flex items-center gap-3">
                 Masuk ke Sistem
             </a>
-
-            <a href="{{ route('register') }}"
-               class="btn-hover px-6 sm:px-8 py-3 sm:py-4 border border-blue-600 text-blue-600 rounded-2xl text-base sm:text-lg lg:text-xl">
-                Buat Akun Baru
-            </a>
         </div>
         @endguest
 
